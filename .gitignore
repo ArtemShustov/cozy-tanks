@@ -7,8 +7,10 @@
 /[Aa]ssets/[Mm]odels/[Ss]ources/*
 /[Aa]ssets/[Tt]hird[Pp]arty/*
 /[Aa]ssets/[Tt]hird [Pp]arty/*
+/[Aa]ssets/[Mm]irror/*
 
 # but not this
+!README.md
 !.gitignore
 !.gitattributes
 ![Pp]rojectSettings

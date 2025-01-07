@@ -3,7 +3,6 @@ using UnityEngine;
 namespace Game.Combat.UI {
 	public class HealthBar: MonoBehaviour {
 		[SerializeField] private Health _health;
-		[SerializeField] private float _renderDist = 10;
 		[Space]
 		[SerializeField] private Transform _bar;
 		[SerializeField] private MeshRenderer _meshRenderer;

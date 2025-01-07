@@ -1,7 +1,8 @@
+using Mirror;
 using UnityEngine;
 
 namespace Game.Tanks {
-	public class TankStateMachine: MonoBehaviour {
+	public class TankStateMachine: NetworkBehaviour {
 		[Header("Ground")]
 		[SerializeField] private float _groundCheckDistance = 0.1f;
 		[SerializeField] private Vector3 _groundCheckArea = new Vector3(1, 0.1f, 1);
@@ -41,6 +42,7 @@ namespace Game.Tanks {
 		}
 		
 		public void RotateTo(Vector2 direction, float speed, float deltaTime) {
+			if (!isLocalPlayer) return;
 			if (direction.sqrMagnitude < Mathf.Epsilon) return;
 			
 			Vector3 localDirection = _rigidbody.transform.InverseTransformDirection(new Vector3(direction.x, 0, direction.y));
@@ -50,6 +52,8 @@ namespace Game.Tanks {
 			_rigidbody.MoveRotation(_rigidbody.rotation * Quaternion.Euler(0, newAngle, 0));
 		}
 		public void MoveTo(Vector2 direction, float speed, float deltaTime) {
+			if (!isLocalPlayer) return;
+			
 			var movement = transform.forward * (speed * _input.Throttle * deltaTime);
 			_rigidbody.MovePosition(transform.position + movement);
 		}

@@ -1,9 +1,10 @@
 using Game.Combat;
+using Mirror;
 using UnityEngine;
 
 namespace Game.Tanks {
     [SelectionBase]
-	public class Tank: MonoBehaviour {
+	public class Tank: NetworkBehaviour {
 		[Header("Settings")]
 		[SerializeField] private TankState _diedState;
 		[Header("Components")]
@@ -17,15 +18,15 @@ namespace Game.Tanks {
 			_health.SetHealth(0);
 		}
 		
-		private void OnEnable() {
-			_health.Died += OnDied;
-		}
-		private void OnDisable() {
-			_health.Died -= OnDied;
-		}
-		private void OnDied() {
+		private void OnZeroHealth() {
 			_machine.Change(_diedState);
 			Destroy(gameObject, 5);
+		}
+		private void OnEnable() {
+			_health.Died += OnZeroHealth;
+		}
+		private void OnDisable() {
+			_health.Died -= OnZeroHealth;
 		}
 	}
 }

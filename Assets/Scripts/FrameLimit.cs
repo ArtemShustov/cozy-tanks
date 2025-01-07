@@ -9,7 +9,7 @@ namespace Game {
 		private int _current = 0;
 
 		private void Awake() {
-			Application.targetFrameRate = -1;
+			Application.targetFrameRate = 60;
 		}
 		
 		private void OnButton(InputAction.CallbackContext obj) {

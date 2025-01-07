@@ -1,21 +1,39 @@
 using System;
+using Game.Tanks;
+using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Game.Inputs {
-	public class PlayerInput: TankInput {
+	public class PlayerInput: NetworkBehaviour, ITankInput {
 		[SerializeField] private InputAction _movement = new InputAction("Movement", InputActionType.Value);
 		[SerializeField] private InputAction _shoot = new InputAction("Shoot", InputActionType.Button);
 		[SerializeField] private Camera _camera;
+
+		[SyncVar]
+		private Vector2 _input;
+		private Vector2 _lastInput;
 		
-		public override Vector2 Direction => GetRelatedMove();
-		public override float Throttle => Mathf.Clamp01(_movement.ReadValue<Vector2>().magnitude);
-		public override event Action<InputActionPhase> Shoot;
+		public Vector2 Direction => _input;
+		public float Throttle => Mathf.Clamp01(_input.magnitude);
+		public event Action<InputActionPhase> Shoot;
 
 		private void Awake() {
 			if (_camera == null) {
 				_camera = Camera.main;
 			}
+		}
+		private void Update() {
+			if (!isLocalPlayer) return;
+			var input = GetRelatedMove();
+			if (_lastInput != input) {
+				_lastInput = input;
+				CmdSetInput(input);
+			}
+		}
+		[Command]
+		private void CmdSetInput(Vector2 input) {
+			_input = input;
 		}
 
 		private Vector2 GetRelatedMove() {
@@ -33,10 +51,10 @@ namespace Game.Inputs {
 			var result = forward * input.magnitude;
 			return new Vector2(result.x, result.z);
 		}
+		
 		private void OnShootAction(InputAction.CallbackContext context) {
 			Shoot?.Invoke(context.phase);
 		}
-		
 		private void OnEnable() {
 			_movement.Enable();
 			_shoot.Enable();
