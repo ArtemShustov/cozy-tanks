@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Game.Tanks {
 	public abstract class TankState: MonoBehaviour, ITankState {
-		protected TankStateMachine Tank { get; private set; }
+		protected Tank Tank { get; private set; }
 
-		public void Initialize(TankStateMachine tank) {
+		public void Initialize(Tank tank) {
 			Tank = tank;
 		}
 		

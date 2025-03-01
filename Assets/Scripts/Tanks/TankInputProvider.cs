@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.Tanks {
 	public class TankInputProvider: ITankInput {
@@ -8,7 +7,7 @@ namespace Game.Tanks {
 		
 		public Vector2 Direction => _input?.Direction ?? Vector2.zero;
 		public float Throttle => _input?.Throttle ?? 0;
-		public event Action<InputActionPhase> Shoot;
+		public event Action Shoot;
 
 		public TankInputProvider() { }
 		public TankInputProvider(ITankInput input) {
@@ -29,8 +28,8 @@ namespace Game.Tanks {
 			input.Shoot -= OnShoot;
 		}
 		
-		private void OnShoot(InputActionPhase phase) {
-			Shoot?.Invoke(phase);
+		private void OnShoot() {
+			Shoot?.Invoke();
 		}
 	}
 }

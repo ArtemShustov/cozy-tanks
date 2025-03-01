@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Game.Tanks.States {
 	public class MoveState: TankState {
@@ -7,6 +8,10 @@ namespace Game.Tanks.States {
 		[SerializeField] private float _rotationSpeed = 5;
 		[Header("Transitions")]
 		[SerializeField] private TankState _idleState;
+		/*
+		private void OnShootInput() {
+			Tank.Shoot();
+		}
 		
 		public override void OnUpdate() {
 			if (Tank.Input.Throttle == 0) {
@@ -20,5 +25,12 @@ namespace Game.Tanks.States {
 				Tank.RotateTo(direction, _rotationSpeed, Time.deltaTime);
 			}
 		}
+		public override void OnEnter() {
+			Tank.Input.Shoot += OnShootInput;
+		}
+		public override void OnExit() {
+			Tank.Input.Shoot -= OnShootInput;
+		}
+		*/
 	}
 }

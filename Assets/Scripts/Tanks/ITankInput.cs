@@ -7,6 +7,6 @@ namespace Game.Tanks {
 		Vector2 Direction { get; }
 		float Throttle { get; }
 
-		event Action<InputActionPhase> Shoot;
+		event Action Shoot;
 	}
 }

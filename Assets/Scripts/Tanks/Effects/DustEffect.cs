@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Game.Tanks.Effects {
 	public class DustEffect: MonoBehaviour {
 		[SerializeField] private ParticleSystem _particle;
-		[SerializeField] private TankStateMachine _tank;
+		[SerializeField] private Tank _tank;
 
 		private bool _isActive;
 
@@ -11,7 +11,7 @@ namespace Game.Tanks.Effects {
 			_particle.Stop();
 		}
 		private void Update() {
-			var isOnGround = _tank.IsOnGround();
+			var isOnGround = _tank.Movement.IsOnGround();
 			if (_isActive == isOnGround) {
 				return;
 			}
